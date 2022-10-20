@@ -6,15 +6,15 @@ import { addHours } from 'date-fns'
 import { Navbar, CalendarEvent, CalendarModal } from '../';
 
 import { getMessagesES, localizer } from '../../helpers';
-import { useUiStore } from '../../hooks';
-import { useCalendarStore } from '../../hooks';
+import { useUiStore, useCalendarStore } from '../../hooks';
  
 
 export const CalendarPage = () => { 
 
   const { openDateModal } = useUiStore();
+  const { events, SetActiveEvent } = useCalendarStore();
+  
   const [ lastView, setLastView ] = useState( localStorage.getItem('lastView') || 'week' );
-  const { events } = useCalendarStore();
 
   const eventStyleGetter = ( event, start, end, isSelected ) => {
 
@@ -25,7 +25,7 @@ export const CalendarPage = () => {
        color: 'white',
     };
 
-    return {
+    return { 
       style,
     };
   }
@@ -36,7 +36,8 @@ export const CalendarPage = () => {
   }
 
   const onSelect = ( event ) => {
-    console.log({ click: event });
+    // console.log({ click: event });
+    SetActiveEvent( event );
   }
 
   const onViewChange = ( event ) => {
